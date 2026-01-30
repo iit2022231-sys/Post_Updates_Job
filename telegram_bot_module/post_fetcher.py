@@ -66,10 +66,7 @@ class PostFetcher:
         minutes = config.get("minutes_to_fetch", 30)
         limit = config.get("messages_per_fetch", 10)
         
-        since = max(
-            self.last_fetch,
-            datetime.now(timezone.utc) - timedelta(minutes=minutes)
-        )
+        since = self.last_fetch
 
         for source in self.config.get_sources():
             try:
