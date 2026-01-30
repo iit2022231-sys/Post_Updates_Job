@@ -1,0 +1,73 @@
+# Telegram API Credentials
+telegram:
+  api_id: 39367448
+  api_hash: "4b9a7be7ded2eb99822fa7eef2f935c9"
+  session_name: "session"
+
+# Source Groups/Channels to fetch posts from
+sources:
+  # - username: "@jobs_and_internships_updates"
+  #   name: "Jobs and Internships"
+  - username: "@jobs_and_internships_updates1"
+    name: "Jobs and Internships1"
+  - username: "@internfreak"
+    name: "InternFreak"
+  - username: "@TechUprise_Updates"
+    name: "Tech Uprise"
+  # - username: "@dot_aware"
+  #   name: "Dot Aware"
+  - username: "@gocareers"  
+    name: "Go Careers"
+  # - username: "@torchbearer_core"
+  #   name: "Torchbearer Core"
+  # - username: "@TorchBearerr"  
+  #   name: "Torchbearer"
+  # - username: "@off_campus_jobs_and_internships"  
+  #   name: "Off Campus Jobs and Internships"
+  # - username: "@freshershunt"  
+  #   name: "Freshers Hunt"
+  # - username: "@getjobss"
+  #   name: "Get Jobs"
+  # - username: "@fresher_offcampus_drives"
+  #   name: "Fresher Offcampus Drives"
+  # - username: "@Fresherjobsadda"  
+  #   name: "Fresher Jobs Adda"
+  # - username: "@offcampus_phodenge"  
+  #   name: "Offcampus Phodenge"
+  # - username: "@fresheroffcampus"  
+  #   name: "Fresher Offcampus"
+  # - username: "@FreshersJobsUpdates"
+  #   name: "Freshers Jobs Updates"
+
+# Destination Groups/Channels to post messages to
+destinations:
+  - username: "@Jobs_Lelo"
+    name: "Primary Destination"
+  # - username: "@another_dest"
+  #   name: "Secondary Destination"
+
+# Fetching Configuration
+fetching:
+  minutes_to_fetch: 30    # Fetch posts from last N minutes (360 = 6 hours)
+  messages_per_fetch: 10  # Max messages to fetch per source
+  batch_sleep_seconds: 0.5
+
+# Posting Configuration
+posting:
+  delay_between_posts_seconds: 0.5
+
+# Rate Limiting
+rate_limiting:
+  max_retries: 3
+  retry_delay_seconds: 2
+
+# Logging
+logging:
+  level: "INFO"                      # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  log_file: "telegram_bot.log"
+  console_output: true
+
+# Storage
+storage:
+  posts_database: "fetched_posts.db"
+  enable_caching: true
