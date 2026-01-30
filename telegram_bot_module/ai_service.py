@@ -2,7 +2,7 @@ from Free_API_Load_balancer import generate
 from enum import Enum as ENUM
 import re
 from enum import Enum
-from utils_handlers_groups import UtilsHandlersGroups
+from .utils_handlers_groups import UtilsHandlersGroups
 
 class SenderList(Enum):
     JOBS_AND_INTERNSHIPS = "Jobs and Internships"
