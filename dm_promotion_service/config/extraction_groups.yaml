@@ -8,8 +8,8 @@ extraction:
     # - username: "@my_promotions"
     #   name: "My Promotions"
 
-    - username: "@leetcode_answers"
-      name: "LeetCode Answers"
+    - username: "@codeforces_answers"
+      name: "Codeforces Answers"
 
 
 
