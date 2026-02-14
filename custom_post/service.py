@@ -20,6 +20,7 @@ class CustomPostService:
         self.logger.info("Starting Custom Post For Contacts Upload Service")
 
         await self.contact_distributer.send_hr_contacts()
+        await self.contact_distributer.send_promotional_post()
         self.logger.info("Custom Post For Contacts Upload Service completed")
     
 

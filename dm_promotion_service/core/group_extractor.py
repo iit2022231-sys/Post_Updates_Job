@@ -7,6 +7,7 @@ from .user_manager import UserManager
 from .response_analyzer import ResponseAnalyzer
 from .level_processor import LevelProcessor
 from .conversation_handler import ConversationHandler
+import aiohttp
 
 class GroupExtractor:
     """Extract users from groups and categorize them"""
@@ -22,7 +23,21 @@ class GroupExtractor:
         config_path = Path(__file__).parent.parent / "config" / "extraction_groups.yaml"
         with open(config_path, 'r') as f:
             self.config = yaml.safe_load(f)
-    
+
+
+    async def check_existence_in_global_db(self, sender_id):
+        URL = "https://script.google.com/macros/s/AKfycbwmU2M8Ez9a1IXBfW9yhOsQsW8eT4JNaXoYyQs2KUYPPA6QhCxLIR5YEpoikxTMPUlH/exec"
+
+        payload = {
+            "user_id": str(sender_id)   # USE sender_id
+        }
+
+        async with aiohttp.ClientSession() as session:
+            async with session.post(URL, json=payload) as response:
+                result = await response.json()
+                return result.get("exists", True)
+
+
     async def extract_and_categorize(self) -> Dict[str, int]:
         """Extract users from groups and categorize as job-seekers"""
         stats = {"added": 0, "skipped": 0}
@@ -54,7 +69,8 @@ class GroupExtractor:
                     if message.date < since:
                         break    
                     has_prev_conversation = await self.level_processor.check_if_conversatiion_exists(message.sender_id)
-                    if message.text and message.sender_id and not has_prev_conversation:
+                    has_not_been_in_global_db=await self.check_existence_in_global_db(message.sender_id)
+                    if message.text and message.sender_id and not has_prev_conversation and not has_not_been_in_global_db:
                         messages.append({
                             'text': message.text,
                             'sender_id': message.sender_id,

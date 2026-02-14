@@ -4,16 +4,7 @@ import pandas as pd
 from datetime import datetime
 import logging
 from telegram_bot_module.post_fetcher import Post
-
-# @dataclass
-# class Post:
-#     """Post data"""
-#     message_id: int
-#     source: str
-#     text: str
-#     date: datetime
-#     sender_id: Optional[int] = None
-#     media_present: bool = False
+import yaml
 
 class CustomPostContactsService:
     def __init__(self, distributor):
@@ -22,7 +13,10 @@ class CustomPostContactsService:
         self.path_1= Path(__file__).parent.parent.parent / "assets" / "company_phone_no.xlsx"
         self.path_2= Path(__file__).parent.parent.parent / "assets" / "hr_details.xlsx"
         self.path_3= Path(__file__).parent.parent.parent / "assets" / "hr_emails_5000.xlsx"
-         # Placeholder, will be set later
+        self.path_config= Path(__file__).parent.parent / "config" / "custom_post.yaml"
+        with open(self.path_config, "r", encoding="utf-8") as f:
+            self.config = yaml.safe_load(f)
+
 
     def format_contacts_1(self, df: pd.DataFrame) -> str:
         lines = ["📌 *HR / Recruiter Contacts*\n"]
@@ -106,7 +100,15 @@ class CustomPostContactsService:
                 await self.distributor.send_posts([post])
                 break
 
-
+    async def send_promotional_post(self):
+                post_text = self.config['post_1']
+                post = Post(
+                    message_id=0,
+                    source="custom_post_contacts",
+                    text=post_text,
+                    date=datetime.now()
+                )
+                await self.distributor.send_posts([post])
         
 
 

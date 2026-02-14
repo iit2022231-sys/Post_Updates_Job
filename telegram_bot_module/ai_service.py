@@ -26,7 +26,7 @@ class AIService:
     def refine_posts(self, posts):
         refined = []
         handler = UtilsHandlersGroups()
-
+        FOOTER = "\n\nFor more Job Updates join https://t.me/Jobs_Lelo"
         for post in posts:
             if not post:
                 continue
@@ -69,6 +69,9 @@ class AIService:
                 SenderList.INTERNSHIP_TO_JOBS.value,
             }:
                 post.text = post.text
+
+            if post.text:
+                post.text = post.text.rstrip() + FOOTER
 
             refined.append(post)
 
