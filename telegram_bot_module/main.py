@@ -9,6 +9,8 @@ from .post_distributor import PostDistributor
 from .ai_service import AIService
 from dm_promotion_service import DMPromotionService
 from group_promotion_service import GroupPromotionService
+from custom_post import CustomPostService
+
 
 
 class TelegramBot:
@@ -38,6 +40,7 @@ class TelegramBot:
         self.ai_service = AIService()
         self.dm_promotion_service = DMPromotionService(self.client_mgr)
         self.group_promotion_service = GroupPromotionService(self.client_mgr)
+        self.custom_post_service = CustomPostService(self.distributor)
         self.logger.info("Bot initialized")
 
     async def initialize(self) -> bool:
@@ -59,8 +62,8 @@ class TelegramBot:
         
         try:
 
-            posts = await self.fetcher.fetch_all()
-            refined_posts = self.ai_service.refine_posts(posts)
+            # posts = await self.fetcher.fetch_all()
+            # refined_posts = self.ai_service.refine_posts(posts)
 
             # with open("refined_posts.txt", "w", encoding="utf-8") as f:
             #     for original, refined in zip(posts, refined_posts):
@@ -72,11 +75,12 @@ class TelegramBot:
 
             # await self.distributor_channels.send_posts()
 
-            if posts:
-                await self.distributor.send_posts(refined_posts)
-            else:
-                self.logger.info("No posts to distribute")
+            # if posts:
+            #     await self.distributor.send_posts(refined_posts)
+            # else:
+            #     self.logger.info("No posts to distribute")
             
+            await self.custom_post_service.run()
             await self.dm_promotion_service.run()
             await self.group_promotion_service.run()
 
