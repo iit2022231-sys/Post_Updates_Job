@@ -105,14 +105,28 @@ class CustomPostContactsService:
                 break
 
     async def send_promotional_post(self):
-                post_text = self.config['post_1']
-                post = Post(
-                    message_id=0,
-                    source="custom_post_contacts",
-                    text=post_text,
-                    date=datetime.now()
-                )
-                await self.distributor.send_posts([post])
+        today = datetime.utcnow().date().isoformat()
+
+        # If already sent today → do nothing
+        if self.config.get("date") == today:
+            return
+
+        # Send post
+        post_text = self.config['post_1']
+        post = Post(
+            message_id=0,
+            source="custom_post_contacts",
+            text=post_text,
+            date=datetime.now()
+        )
+        await self.distributor.send_posts([post])
+
+        # Update date in YAML
+        self.config["date"] = today
+
+        with open(self.path_config, "w", encoding="utf-8") as f:
+            yaml.safe_dump(self.config, f, allow_unicode=True)
+
         
 
 
