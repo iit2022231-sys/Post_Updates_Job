@@ -7,7 +7,7 @@ from .user_manager import UserManager
 from .response_analyzer import ResponseAnalyzer
 from .level_processor import LevelProcessor
 from .conversation_handler import ConversationHandler
-import aiohttp
+# import aiohttp
 
 class GroupExtractor:
     """Extract users from groups and categorize them"""

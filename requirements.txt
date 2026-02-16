@@ -5,6 +5,7 @@ groq
 pandas
 openpyxl
 google-genai
+aiohttp
 # azure-functions
 # requests
 # lxml
