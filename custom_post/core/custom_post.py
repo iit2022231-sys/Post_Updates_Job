@@ -91,7 +91,7 @@ class CustomPostContactsService:
         FOOTER = "\n\nFor more Job Updates join https://t.me/Jobs_Lelo"
         
         for df, start, end, formatter in formatters:
-            text=formatter(df),
+            text=formatter(df)
             if text:
                 text = text.rstrip() + FOOTER
             if datetime.strptime(start, "%H:%M").time() <= now <= datetime.strptime(end, "%H:%M").time():
